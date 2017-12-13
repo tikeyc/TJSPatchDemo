@@ -12,6 +12,7 @@
 
 #import "JSPathRequest.h"
 #import "JPEngine.h"
+#import "JPLoader.h"
 
 //取消注释就是使用本地的js热更新文件，当前是使用从服务器下载的
 #define JSPatch_Test
@@ -68,16 +69,16 @@
 #ifdef JSPatch_Test
     [JPEngine startEngine];
     //如果是模块化开发(需要include导入js文件的时候)使用[JPEngine evaluateScriptWithPath:sourcePath];方法执行js文件
-    NSString *sourcePath = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"Resource/demo.js"];
+    NSString *sourcePath = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"Resource/main.js"];
     [JPEngine evaluateScriptWithPath:sourcePath];
 #else
     //执行下载下来的js文件
     [JPLoader run];
     
-    //下载模块化js文件
+    //下载模块化js zip文件
     [JSPathRequest loadServiceJSZip];
     //下载单个js文件
-    [JSPathRequest loadServiceScriptString];
+    //[JSPathRequest loadServiceScriptString];
 #endif
 
 }
@@ -100,15 +101,16 @@
     //app从后台返回前台时，重新下载热更新脚本
 #ifdef JSPatch_Test
     [JPEngine startEngine];
-    NSString *sourcePath = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"patchfile/1.0.js"];
+    //如果是模块化开发(需要include导入js文件的时候)使用[JPEngine evaluateScriptWithPath:sourcePath];方法执行js文件
+    NSString *sourcePath = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"Resource/main.js"];
     [JPEngine evaluateScriptWithPath:sourcePath];
 #else
     //执行下载下来的js文件
     [JPLoader run];
-    //下载模块化js文件
+    //下载模块化js zip文件
     [JSPathRequest loadServiceJSZip];
     //下载单个js文件
-    [JSPathRequest loadServiceScriptString];
+    //[JSPathRequest loadServiceScriptString];
 #endif
 }
 
